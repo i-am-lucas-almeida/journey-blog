@@ -1,31 +1,19 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
+import { formatReadingTime } from "../utils/formatReadingTime"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import Footer from "../components/footer"
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.nodes
 
-  if (posts.length === 0) {
-    return (
-      <Layout location={location} title={siteTitle}>
-        <Seo title="All posts" />
-        <Bio />
-        <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.js).
-        </p>
-      </Layout>
-    )
-  }
-
   return (
     <Layout location={location} title={siteTitle}>
-      <Seo title="All posts" />
+      <Seo title="Journey — um blog de Lucas Almeida" />
       <Bio />
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
@@ -44,7 +32,11 @@ const BlogIndex = ({ data, location }) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>{post.frontmatter.date}</small>
+                  <aside>
+                    <small>{post.frontmatter.date}</small>
+                    <span>•</span>
+                    <small>{formatReadingTime(post.frontmatter.timeRead)}</small>
+                  </aside>
                 </header>
                 <section>
                   <p
@@ -59,6 +51,7 @@ const BlogIndex = ({ data, location }) => {
           )
         })}
       </ol>
+      <Footer />
     </Layout>
   )
 }
@@ -79,9 +72,10 @@ export const pageQuery = graphql`
           slug
         }
         frontmatter {
-          date(formatString: "MMMM DD, YYYY")
+          date(formatString: "DD/MM/YYYY")
           title
           description
+          timeRead
         }
       }
     }

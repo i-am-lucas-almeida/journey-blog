@@ -28,7 +28,7 @@ const Bio = () => {
 
   // Set these values by editing "siteMetadata" in gatsby-config.js
   const author = data.site.siteMetadata?.author
-  const social = data.site.siteMetadata?.social
+  const site = 'https://github.com/i-am-lucas-almeida'
 
   return (
     <div className="bio">
@@ -36,20 +36,24 @@ const Bio = () => {
         className="bio-avatar"
         layout="fixed"
         formats={["auto", "webp", "avif"]}
-        src="../images/profile-pic.png"
+        src="../images/profile-image.jpg"
         width={50}
         height={50}
         quality={95}
-        alt="Profile picture"
+        alt="Foto de perfil"
       />
       {author?.name && (
-        <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
-        </p>
+        <div>
+
+          <p>
+            Blog pessoal de <a href={site} target='_blank' rel='noreferrer'>{author.name}</a>.
+          </p>
+
+          <p>
+            {author?.summary || null}
+          </p>
+
+        </div>
       )}
     </div>
   )

@@ -4,6 +4,7 @@ import { Link, graphql } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import { formatReadingTime } from "../utils/formatReadingTime"
 
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
@@ -23,7 +24,11 @@ const BlogPostTemplate = ({ data, location }) => {
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.date}</p>
+          <aside>
+            <p>{post.frontmatter.date}</p>
+            <span>•</span>
+            <p>{formatReadingTime(post.frontmatter.timeRead)}</p>
+          </aside>
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post.html }}
@@ -31,6 +36,11 @@ const BlogPostTemplate = ({ data, location }) => {
         />
         <hr />
         <footer>
+          <aside className="link-bio">
+            <Link className="footer-link-home" to="/">
+              {siteTitle}
+            </Link>
+          </aside>
           <Bio />
         </footer>
       </article>
@@ -83,8 +93,9 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        date(formatString: "DD/MM/YYYY")
         description
+        timeRead
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
