@@ -119,7 +119,7 @@ h4,
 h5,
 h6 {
   font-weight: var(--fontWeight-bold);
-  color: var(--color-heading);
+  color: var(--color-text);
 }
 
 h1 {
@@ -347,7 +347,7 @@ a:focus {
 }
 
 .blog-post header aside p {
-  font-size: var(--fontSize-1);
+  font-size: .9rem;
   color: var(--color-text-light);
 }
 
